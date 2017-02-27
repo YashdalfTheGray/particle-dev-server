@@ -16,10 +16,13 @@
   },
   "devDependencies": {
     "@types/tape": "^4.2.29",
+    "tap-min": "^1.2.1",
     "tape": "^4.6.3"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node build/index.js",
+    "clean": "git -xfd"
   },
   "repository": {
     "type": "git",
