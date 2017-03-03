@@ -1,9 +1,16 @@
-import { Request, Response } from 'express';
+import { Request, Response, NextFunction } from 'express';
 
-const getDevicesRoot = (req: Request, res: Response) => {
-    res.json(req.path);
+const getDevices = (req: Request, res: Response, next: NextFunction) => {
+    if (/^\/devices\//.test(req.path)) {
+        res.json({
+            requestedPath: req.path
+        });
+    }
+    else {
+        next();
+    }
 };
 
 export {
-    getDevicesRoot
+    getDevices
 };
