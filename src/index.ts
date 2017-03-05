@@ -5,14 +5,14 @@ import * as dotenv from 'dotenv';
 
 dotenv.config();
 
-import { getDevices } from './routes/devices';
+import { handleDeviceRequest } from './routes/devices';
 import { getStatus } from './routes/status';
 
 const app = express();
 const appPort = process.env.PORT || process.argv[2] || 8080;
 
 app.use(morgan('dev'));
-app.use(getDevices);
+app.use(handleDeviceRequest);
 
 app.get('/', getStatus);
 
