@@ -17,16 +17,14 @@
     "typescript": "^2.2.1"
   },
   "devDependencies": {
-    "@types/tape": "^4.2.29",
-    "tap-min": "^1.2.1",
-    "tape": "^4.6.3"
+    "ava": "^0.19.1"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "npm run build && ava build/**/*.spec.js",
     "start": "npm run build && npm run server",
     "build": "tsc",
     "server": "node build/index.js",
-    "clean": "git -xfd"
+    "clean": "git clean -xfd"
   },
   "repository": {
     "type": "git",
