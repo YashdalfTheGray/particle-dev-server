@@ -1,9 +1,6 @@
 import * as express from 'express';
 import * as morgan from 'morgan';
 import * as chalk from 'chalk';
-import * as dotenv from 'dotenv';
-
-dotenv.config();
 
 import { handleDeviceRequest } from './routes/devices';
 import { getStatus } from './routes/status';
