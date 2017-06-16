@@ -18,6 +18,7 @@
     "ava": "^0.19.1"
   },
   "scripts": {
+    "postinstall": "npm run build",
     "test": "npm run build && ava build/**/*.spec.js",
     "start": "npm run build && npm run server",
     "build": "tsc",
