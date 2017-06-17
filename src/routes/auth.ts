@@ -27,7 +27,14 @@ function findToken(req: Request): string | null {
 }
 
 const authenticate = (req: Request, res: Response, next: NextFunction) => {
-    res.sendStatus(200);
+    const token = findToken(req);
+
+    if (token === null) {
+        res.json(new Error('Invalid auth token'));
+    }
+    else {
+        next();
+    }
 };
 
 export {
