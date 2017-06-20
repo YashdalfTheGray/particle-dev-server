@@ -15,8 +15,7 @@
     "typescript": "^2.2.1"
   },
   "devDependencies": {
-    "ava": "^0.19.1",
-    "mock-express-response": "^0.2.1"
+    "ava": "^0.19.1"
   },
   "scripts": {
     "postinstall": "npm run build",
