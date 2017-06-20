@@ -2,35 +2,52 @@ import { Request, Response, NextFunction } from 'express';
 
 import ApiConfig from '../ApiConfig';
 
+interface TokenError {
+    error: string;
+    error_description: string;
+}
+
+function isTokenError(object: any): object is TokenError {
+    return 'error_description' in object;
+}
+
 const apiConfig: ApiConfig = require(process.argv[1]);
 
-function findToken(req: Request): string | null {
-    if (req.get('Authorization')) {
-        const [type, token, ...rest] = req.get('Authorization').split(' ');
+function findToken(req: Request): string | TokenError {
+    const noAccessTokenError: TokenError = {
+        error: 'invalid_request',
+        error_description: 'the access token was not found'
+    };
 
-        if (rest.length !== 0) {
-            return null;
-        }
-        else if (type !== 'Bearer') {
-            return null;
+    if (req.get('Authorization')) {
+        const [type, token, ...rest] = req.get('Authorization').split(' ') || '';
+
+        if (type !== 'Bearer') {
+            return {
+                error: 'invalid_request',
+                error_description: 'malformed auth header'
+            } as TokenError;
         }
         else {
             return token;
         }
     }
     else if (req.method === 'GET') {
-        return req.query.access_token || null;
+        return req.query.access_token || noAccessTokenError;
     }
     else if (req.method === 'POST' && req.get('Content-Type') === 'application/x-www-form-urlencoded') {
-        return req.body.access_token || null;
+        return req.body.access_token || noAccessTokenError;
+    }
+    else {
+        return noAccessTokenError;
     }
 }
 
 const authenticate = (req: Request, res: Response, next: NextFunction) => {
     const token = findToken(req);
 
-    if (token === null) {
-        res.json(new Error('Invalid auth token'));
+    if (isTokenError(token)) {
+        res.json(token);
     }
     else {
         next();
