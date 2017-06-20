@@ -17,3 +17,18 @@ test('status middleware returns a good status when file is found', t => {
 
     getStatus(null, response as Response);
 });
+
+test('status middleware returns a bad status when file is not found', t => {
+    process.argv[1] = null;
+
+    t.plan(2);
+
+    const response = {
+        json({ status, devicesFileFound }) {
+            t.is(status, 'ok');
+            t.is(devicesFileFound, false);
+        }
+    }
+
+    getStatus(null, response as Response);
+});
