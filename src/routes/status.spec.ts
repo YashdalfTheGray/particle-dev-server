@@ -1,14 +1,19 @@
 import test from 'ava';
-import MockExpressResponse from 'mock-express-response';
 import { Response } from 'express';
 
 import { getStatus } from './status';
 
 test('status middleware returns a good status when file is found', t => {
-    const response = new MockExpressResponse();
     process.argv[1] = 'someFile.js';
 
-    getStatus(null, response);
+    t.plan(2);
 
-    response._getJSON();
+    const response = {
+        json({ status, devicesFileFound }) {
+            t.is(status, 'ok');
+            t.is(devicesFileFound, true);
+        }
+    }
+
+    getStatus(null, response as Response);
 });
