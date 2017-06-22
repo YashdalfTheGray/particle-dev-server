@@ -49,11 +49,19 @@ const authenticate = (req: Request, res: Response, next: NextFunction) => {
     if (isTokenError(token)) {
         res.json(token);
     }
+    else if (token !== apiConfig.token) {
+        res.json({
+            error: "invalid_token",
+            error_description: "The access token provided is invalid."
+        });
+    }
     else {
         next();
     }
 };
 
+export default authenticate;
+
 export {
-    authenticate
+    findToken
 };
