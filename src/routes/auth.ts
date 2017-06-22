@@ -60,8 +60,7 @@ const authenticate = (req: Request, res: Response, next: NextFunction) => {
     }
 };
 
-export default authenticate;
-
 export {
-    findToken
+    findToken,
+    authenticate
 };
