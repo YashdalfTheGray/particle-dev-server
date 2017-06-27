@@ -2,7 +2,7 @@ interface Device {
     id: string;
     name: string;
     last_app: string;
-    connected: string;
+    connected: boolean;
     variables?: Object;
     functions?: string[];
     cc3000_patch_version?: string;
