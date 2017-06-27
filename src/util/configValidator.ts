@@ -1,7 +1,11 @@
-import ApiConfig from '../ApiConfig';
+import ApiConfig, { Device } from '../ApiConfig';
 
 function isApiConfig(object: any): object is ApiConfig {
     return 'token' in object && 'devices' in object;
+}
+
+function isDevice(object: any): object is Device {
+    return 'id' in object && 'name' in object && 'last_app' in object;
 }
 
 function validate(config: object): boolean {
@@ -11,7 +15,12 @@ function validate(config: object): boolean {
     else if (!isApiConfig(config)) {
         return false;
     }
-    return true;
+
+    const areAllDevicesValid = config.devices.reduce((acc, d) => {
+        return isDevice(d);
+    }, false);
+
+    return config.devices.length === 0 ? true : areAllDevicesValid;
 }
 
 export {
