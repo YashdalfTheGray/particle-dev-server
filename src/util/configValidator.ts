@@ -5,7 +5,12 @@ function isApiConfig(object: any): object is ApiConfig {
 }
 
 function isDevice(object: any): object is Device {
-    return 'id' in object && 'name' in object && 'last_app' in object;
+    return 'id' in object &&
+        'name' in object &&
+        'last_app' in object &&
+        'connected' in object &&
+        'product_id' in object &&
+        'last_heard' in object;
 }
 
 function validate(config: object): boolean {

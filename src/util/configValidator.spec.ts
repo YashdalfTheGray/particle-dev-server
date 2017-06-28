@@ -2,11 +2,15 @@ import test from 'ava';
 
 import { validate } from './configValidator';
 
-const mockDevice = {
+const partialMockDevice = {
     id: 'stuff',
     name: 'things',
     last_app: 'app',
     connected: false,
+};
+
+const mockDevice = {
+    ...partialMockDevice,
     product_id: 23098234092384,
     last_heard: Date.now()
 };
@@ -34,4 +38,8 @@ test('validation passes for config with 0 devices', t => {
 
 test('validation passes for config an actual device', t => {
     t.is(validate({ token: 'stuff', devices: [mockDevice] }), true);
+});
+
+test('validation fails for config a kinda sorta device', t => {
+    t.is(validate({ token: 'stuff', devices: [partialMockDevice] }), false);
 });
